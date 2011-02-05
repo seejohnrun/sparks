@@ -24,7 +24,7 @@ class SparkUtils {
                 if ($object != '.' && $object != '..') { 
                     if (filetype($dir . '/' . $object) == "dir") self::remove_full_directory($dir . '/' . $object, $vocally); 
                     else {
-                        if ($vocally) self::line("Removing $dir/$object");
+                        if ($vocally) self::notice("Removing $dir/$object");
                         unlink($dir . '/' . $object); 
                     }
                 } 
@@ -33,6 +33,18 @@ class SparkUtils {
             return rmdir($dir); 
         } 
     } 
+
+    static function notice($msg) {
+        self::line($msg, 'SPARK');
+    }
+
+    static function error($msg) {
+        self::line($msg, 'ERROR');
+    }
+
+    static function warning($msg) {
+        self::line($msg, 'WARNING');
+    }
 
     static function line($msg = '', $s = null) {
         foreach(explode("\n", $msg) as $line) echo !$s ? "$line\n" : "[ $s ]  $line\n";

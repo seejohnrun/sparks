@@ -17,8 +17,8 @@ class Spark {
         }
 
         if ($this->data->is_unsupported) {
-            SparkUtils::line('WARNING: This spark is no longer supported.');
-            SparkUtils::line('You can keep using it, or look for an alternate');
+            SparkUtils::warning('This spark is no longer supported.');
+            SparkUtils::warning('You can keep using it, or look for an alternate');
         }
         
         // used internally

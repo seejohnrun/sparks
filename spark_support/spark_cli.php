@@ -74,19 +74,35 @@ class SparkCLI {
     }
 
     private function failtown($error_message) {
-        SparkUtils::line();
-        SparkUtils::line('Uh-oh!', 'ERROR');
-        SparkUtils::line($error_message, 'ERROR');
+        SparkUtils::error('Uh-oh!');
+        SparkUtils::error($error_message);
     }
 
     private function remove($args) {
-        if (count($args) != 1) return $this->failtown('Which spark do you want to remove?');
-        list($spark_name) = $args;
+ 
+        $flats = array();
+        $flags = array();
+        foreach($args as $arg) {
+            preg_match('/^(\-?[a-zA-Z])([^\s]*)$/', $arg, &$matches);
+            if (count($matches) != 3) continue;
+            $matches[0][0] == '-' ? $flags[$matches[1][1]] = $matches[2] : $flats[] = $matches[0];
+        }
 
-        $dir = SPARK_PATH . "/$spark_name";
-        SparkUtils::line("Removing $spark_name from $dir");
-        if (SparkUtils::remove_full_directory($dir, true)) SparkUtils::line('Spark removed successfully!');
-        else SparkUtils::line('Looks like that spark isn\'t installed');
+        if (count($flats) != 1) return $this->failtown('Which spark do you want to remove?');
+        $spark_name = $flats[0];
+        $version = $flags['v'];
+
+        // figure out what to remove and make sure its isntalled
+        $dir_to_remove = SPARK_PATH . ($version == null ? "/$spark_name" : "/$spark_name/$version");
+        if (!file_exists($dir_to_remove)) return SparkUtils::notice('Looks like that spark isn\'t installed');
+
+        if ($version == null && !array_key_exists('f', $flags)) throw new SparkException("Please specify a version of remove all with -f");
+
+        SparkUtils::notice("Removing $spark_name (" . ($version ? $version : 'ALL') . ") from $dir_to_remove");
+        if (SparkUtils::remove_full_directory($dir_to_remove, true)) SparkUtils::notice('Spark removed successfully!');
+        else SparkUtils::notice('Looks like that spark isn\'t installed');
+        // attempt to clean up - will not remove unless empty 
+        @rmdir(SPARK_PATH . "/$spark_name");
     }
 
    private function install($args) {
@@ -105,7 +121,7 @@ class SparkCLI {
 
         // retrieve the spark details
         foreach ($this->spark_sources as $source) {
-            SparkUtils::line("Retrieving spark detail from " . $source->get_url(), 'SPARK');
+            SparkUtils::notice("Retrieving spark detail from " . $source->get_url());
             $spark = $source->get_spark_detail($spark_name, $version);
             if ($spark != null) break;
         }
@@ -114,12 +130,12 @@ class SparkCLI {
         if ($spark == null) throw new SparkException("Unable to find spark: $spark_name ($version) in any sources");
 
         // retrieve the spark
-        SparkUtils::line("From Downtown! Retrieving spark from " . $spark->location_detail(), 'SPARK');
+        SparkUtils::notice("From Downtown! Retrieving spark from " . $spark->location_detail());
         if (!$spark->retrieve()) throw new SparkException('Failed to retrieve the spark ;(');
 
-        SparkUtils::line("Installing spark", 'SPARK');
+        SparkUtils::notice('Installing spark');
         $spark->install();
-        SparkUtils::line('Spark installed to ' . $spark->installed_path() . ' - You\'re on fire!', 'SPARK');
+        SparkUtils::notice('Spark installed to ' . $spark->installed_path() . ' - You\'re on fire!');
     }
 
 }
