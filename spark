@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
-require_once 'spark_source.php';
-require_once 'spark_cli.php';
+require_once 'spark_support/spark_source.php';
+require_once 'spark_support/spark_cli.php';
 
 // define a source
 $source = new SparkSource('sparks.oconf.org');
