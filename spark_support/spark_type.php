@@ -28,6 +28,7 @@ class Spark {
     function retrieve() { }
 
     function install() {
+        @mkdir("./third_party"); // Two steps for windows
         @mkdir("./third_party/$this->name");
         $success = @rename($this->temp_path, $this->installation_path);
         if ($success) $this->installed_path = $this->installation_path;
