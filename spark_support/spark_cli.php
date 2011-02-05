@@ -115,7 +115,7 @@ class SparkCLI {
 
         // retrieve the spark
         SparkUtils::line("From Downtown! Retrieving spark from " . $spark->location_detail(), 'SPARK');
-        $spark->retrieve();
+        if (!$spark->retrieve()) throw new SparkException('Failed to retrieve the spark ;(');
 
         SparkUtils::line("Installing spark", 'SPARK');
         $spark->install();
