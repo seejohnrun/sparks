@@ -1,52 +1,89 @@
 <?php
+
+require_once dirname(__FILE__) . '/spark_utils.php';
+require_once dirname(__FILE__) . '/spark_exception.php';
 require_once dirname(__FILE__) . '/spark_source.php';
+
+define('SPARK_VERSION', '0.0.1');
 
 class SparkCLI {
 
-    private static $disallowed_commands = array('execute', 'failtown', 'line');
+    private static $commands = array(
+        'install' => 'install',
+        'list' => 'lister',
+        'remove' => 'remove',
+        'source' => 'source',
+        'version' => 'version'
+    );
 
     function __construct($spark_source) {
         $this->spark_source = $spark_source;
     }
 
     function execute($command, $args = array()) {
-        if (in_array($command, self::$disallowed_commands) || !method_exists($this, $command)) {
+        if (!array_key_exists($command, self::$commands)) {
             $this->failtown("Unknown action: $command");
             return;
         }
-        $this->$command($args);
+        try {
+            $method = self::$commands[$command];
+            $this->$method($args);
+        } catch (Exception $ex) {
+            return $this->failtown($ex->getMessage());
+        }
+    }
+
+    // list the installed sparks
+    private function lister() {
+        foreach(scandir('./third_party') as $item) {
+            if (!is_dir("./third_party/$item") || $item[0] == '.') continue;
+            foreach (scandir("./third_party/$item") as $ver) {
+                if (!is_dir("./third_party/$item/$ver") || $ver[0] == '.') continue;
+                SparkUtils::line("$item ($ver)");
+            }
+        } 
+    }
+
+    private function version() {
+        SparkUtils::line('version: ' . SPARK_VERSION);
     }
 
     private function source() {
-        $this->line('source: ' . $this->spark_source->url);
+        SparkUtils::line('source: ' . $this->spark_source->url);
     }
 
     private function failtown($error_message) {
-        $this->line('Uh-oh!');
-        $this->line($error_message);
+        SparkUtils::line('Uh-oh!');
+        SparkUtils::line($error_message);
     }
 
     // commands
 
-    private function install($args) {
+    private function remove($args) {
+        if (count($args) != 1) return $this->failtown('spark remove <name>');
+        list($spark_name) = $args;
+
+        $dir = "./third_party/$spark_name";
+        SparkUtils::line("Removing $spark_name from $dir");
+        if (SparkUtils::remove_full_directory("./third_party/$spark_name", true)) SparkUtils::line('Spark removed successfully!');
+        else SparkUtils::line('Looks like that spark isn\'t installed');
+    }
+
+   private function install($args) {
         if (count($args) != 1) return $this->failtown('spark install <name>');
         list($spark_name) = $args;
 
         // retrieve the spark details
-        $this->line("Retrieving spark detail from " . $this->spark_source->get_url());
+        SparkUtils::line("Retrieving spark detail from " . $this->spark_source->get_url());
         $spark = $this->spark_source->get_spark_detail($spark_name);
 
         // retrieve the spark
-        $this->line("Retrieving spark from " . $spark->location_detail());
+        SparkUtils::line("From Downtown! Retrieving spark from " . $spark->location_detail());
         $spark->retrieve();
 
-        $this->line("Installing spark");
+        SparkUtils::line("Installing spark");
         $spark->install();
-        $this->line('Spark installed to ' . $spark->installed_path() . ' - You\'re on fire!');
-    }
-
-    private static function line($msg) {
-        echo "[SPARK] $msg\n";
+        SparkUtils::line('Spark installed to ' . $spark->installed_path() . ' - He\'s on fire!');
     }
 
 }

@@ -13,9 +13,11 @@ class GitSpark extends Spark {
 
     function retrieve() {
         $this->temp_path = "/tmp/$this->temp_token";
-        system("git clone $this->base_location $this->temp_path");
-        system("cd $this->temp_path; git checkout $this->tag -b $this->temp_token");
-        system("rm -rf $this->temp_path/.git");
+        // check out the right tag
+        `git clone $this->base_location $this->temp_path`;
+        `cd $this->temp_path; git checkout $this->tag -b $this->temp_token`;
+        // remove the git directory
+        SparkUtils::remove_full_directory("$this->temp_path/.git");
     }
 
 }
