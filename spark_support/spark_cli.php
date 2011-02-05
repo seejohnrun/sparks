@@ -5,6 +5,7 @@ require_once dirname(__FILE__) . '/spark_exception.php';
 require_once dirname(__FILE__) . '/spark_source.php';
 
 define('SPARK_VERSION', '0.0.1');
+define('SPARK_PATH', './third_party');
 
 class SparkCLI {
 
@@ -35,10 +36,10 @@ class SparkCLI {
 
     // list the installed sparks
     private function lister() {
-        foreach(scandir('./third_party') as $item) {
-            if (!is_dir("./third_party/$item") || $item[0] == '.') continue;
-            foreach (scandir("./third_party/$item") as $ver) {
-                if (!is_dir("./third_party/$item/$ver") || $ver[0] == '.') continue;
+        foreach(scandir(SPARK_PATH) as $item) {
+            if (!is_dir(SPARK_PATH . "/$item") || $item[0] == '.') continue;
+            foreach (scandir(SPARK_PATH . "/$item") as $ver) {
+                if (!is_dir(SPARK_PATH . "/$item/$ver") || $ver[0] == '.') continue;
                 SparkUtils::line("$item ($ver)");
             }
         } 
@@ -61,9 +62,9 @@ class SparkCLI {
         if (count($args) != 1) return $this->failtown('Which spark do you want to remove?');
         list($spark_name) = $args;
 
-        $dir = "./third_party/$spark_name";
+        $dir = SPARK_PATH . "/$spark_name";
         SparkUtils::line("Removing $spark_name from $dir");
-        if (SparkUtils::remove_full_directory("./third_party/$spark_name", true)) SparkUtils::line('Spark removed successfully!');
+        if (SparkUtils::remove_full_directory($dir, true)) SparkUtils::line('Spark removed successfully!');
         else SparkUtils::line('Looks like that spark isn\'t installed');
     }
 

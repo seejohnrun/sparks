@@ -14,7 +14,7 @@ class Spark {
         $this->temp_path = sys_get_temp_dir() . '/' . $this->temp_token;
 
         // tell the user if its already installed and throw an error
-        $this->installation_path = "./third_party/$this->name/$this->version";
+        $this->installation_path = SPARK_PATH . "/$this->name/$this->version";
         if (is_dir($this->installation_path)) {
             throw new SparkException("Already installed.  Try `php tools/spark remove $this->name`");
         }
@@ -28,8 +28,8 @@ class Spark {
     function retrieve() { }
 
     function install() {
-        @mkdir("./third_party"); // Two steps for windows
-        @mkdir("./third_party/$this->name");
+        @mkdir(SPARK_PATH); // Two steps for windows
+        @mkdir(SPARK_PATH . "/$this->name");
         $success = @rename($this->temp_path, $this->installation_path);
         if ($success) $this->installed_path = $this->installation_path;
     }
