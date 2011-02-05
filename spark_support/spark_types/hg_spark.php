@@ -17,7 +17,6 @@ class MercurialSpark extends Spark {
     }
 
     function retrieve() {
-        $this->temp_path = "/tmp/$this->temp_token";
         `hg clone -r$this->tag $this->base_location $this->temp_path`;
         // remove the mercurial directory
         SparkUtils::remove_full_directory("$this->temp_path/.hg");

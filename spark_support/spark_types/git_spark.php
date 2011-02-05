@@ -17,7 +17,6 @@ class GitSpark extends Spark {
     }
 
     function retrieve() {
-        $this->temp_path = "/tmp/$this->temp_token";
         // check out the right tag
         `git clone $this->base_location $this->temp_path`;
         `cd $this->temp_path; git checkout $this->tag -b $this->temp_token`;

@@ -11,6 +11,7 @@ class Spark {
         
         // used internally
         $this->temp_token = 'spark-' . $this->spark_id . '-' . time();
+        $this->temp_path = sys_get_temp_dir() . '/' . $this->temp_token;
 
         // tell the user if its already installed and throw an error
         $this->installation_path = "./third_party/$this->name/$this->version";
