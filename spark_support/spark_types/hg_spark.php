@@ -9,7 +9,7 @@ class MercurialSpark extends Spark {
     }
 
     private static function hg_installed() {
-        return !!`which hg`;
+        return !!`hg`;
     }
 
     function location_detail() {

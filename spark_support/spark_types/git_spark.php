@@ -9,7 +9,7 @@ class GitSpark extends Spark {
     }
 
     private static function git_installed() {
-        return !!`which git`;
+        return !!`git`;
     }
 
     function location_detail() {
