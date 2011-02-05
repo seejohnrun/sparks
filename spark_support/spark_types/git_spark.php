@@ -22,6 +22,7 @@ class GitSpark extends Spark {
         `cd $this->temp_path; git checkout $this->tag -b $this->temp_token`;
         // remove the git directory
         SparkUtils::remove_full_directory("$this->temp_path/.git");
+        return file_exists($this->temp_path);
     }
 
 }

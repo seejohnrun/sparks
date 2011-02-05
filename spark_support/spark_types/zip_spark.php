@@ -14,6 +14,7 @@ class ZipSpark extends Spark {
     function retrieve() {
         file_put_contents($this->temp_file, file_get_contents($this->base_location));
         system("unzip $this->temp_file -d $this->temp_path"); 
+        return file_exists($this->temp_path);
     }
 
 }
