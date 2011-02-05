@@ -8,7 +8,7 @@ class SparkSource {
 
     function get_spark_detail($spark_name, $version = 'HEAD') {
         $json_data = @file_get_contents('http://' . $this->url . "/packages/$spark_name/versions/$version/spec.json");
-        if (!$json_data) throw new SparkException("No such spark: $spark_name ($version)");
+        if (!$json_data) return null; // no such spark here
         $data = json_decode($json_data);
 
         if ($data->repository_type == 'hg') return new MercurialSpark($spark_name, $data);

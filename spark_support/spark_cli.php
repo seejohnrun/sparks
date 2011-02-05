@@ -13,14 +13,14 @@ class SparkCLI {
         'install' => 'install',
         'list' => 'lister',
         'remove' => 'remove',
-        'source' => 'source',
+        'sources' => 'sources',
         'version' => 'version',
         'help' => 'help',
         '' => 'index' // default action
     );
 
-    function __construct($spark_source) {
-        $this->spark_source = $spark_source;
+    function __construct($spark_sources) {
+        $this->spark_sources = $spark_sources;
     }
 
     function execute($command, $args = array()) {
@@ -62,16 +62,19 @@ class SparkCLI {
         SparkUtils::line('install   # Install a spark');
         SparkUtils::line('remove    # Remove a spark');
         SparkUtils::line('list      # List installed sparks');
-        SparkUtils::line('source    # Display the spark source URL');
+        SparkUtils::line('sources   # Display the spark source URL(s)');
         SparkUtils::line('version   # Display the installed spark version');
         SparkUtils::line('help      # This message');
     }
 
-    private function source() {
-        SparkUtils::line('source: ' . $this->spark_source->url);
+    private function sources() {
+        foreach($this->spark_sources as $source) {
+            SparkUtils::line($source->get_url());
+        }
     }
 
     private function failtown($error_message) {
+        SparkUtils::line();
         SparkUtils::line('Uh-oh!', 'ERROR');
         SparkUtils::line($error_message, 'ERROR');
     }
@@ -101,8 +104,14 @@ class SparkCLI {
         $version = array_key_exists('v', $flags) ? $flags['v'] : 'HEAD';
 
         // retrieve the spark details
-        SparkUtils::line("Retrieving spark detail from " . $this->spark_source->get_url(), 'SPARK');
-        $spark = $this->spark_source->get_spark_detail($spark_name, $version);
+        foreach ($this->spark_sources as $source) {
+            SparkUtils::line("Retrieving spark detail from " . $source->get_url(), 'SPARK');
+            $spark = $source->get_spark_detail($spark_name, $version);
+            if ($spark != null) break;
+        }
+
+        // did we find the details?
+        if ($spark == null) throw new SparkException("Unable to find spark: $spark_name ($version) in any sources");
 
         // retrieve the spark
         SparkUtils::line("From Downtown! Retrieving spark from " . $spark->location_detail(), 'SPARK');

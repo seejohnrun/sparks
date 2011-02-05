@@ -11,7 +11,7 @@ class Spark {
         
         // see if this is deactived
         if ($this->data->is_deactivated) {
-            $msg = 'Woah there - it seems the spark you want has been deactivated by the author';
+            $msg = 'Woah there - it seems the spark you want has been deactivated';
             if ($this->data->spark_home) $msg .= "\nLook for different versions at: " . $this->data->spark_home;
             throw new SparkException($msg);
         }
