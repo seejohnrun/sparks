@@ -9,7 +9,7 @@ $sources = array();
 if ($fh = @fopen(dirname(__FILE__) . '/spark_support/sources', 'r')) {
     while ($line = fgets($fh)) {
         $line = trim($line);
-        if ($line) $sources[] = new SparkSource($line);
+        if ($line && $line[0] != '#') $sources[] = new SparkSource($line);
     }
     fclose($fh);
 }
