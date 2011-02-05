@@ -70,12 +70,22 @@ class SparkCLI {
     }
 
    private function install($args) {
-        if (count($args) != 1) return $this->failtown('spark install <name>');
-        list($spark_name) = $args;
+
+        $flats = array();
+        $flags = array();
+        foreach($args as $arg) {
+            preg_match('/^(\-?[a-zA-Z])([^\s]+)$/', $arg, &$matches);
+            if (count($matches) != 3) continue;
+            $matches[0][0] == '-' ? $flags[$matches[1][1]] = $matches[2] : $flats[] = $matches[0];
+        }
+
+        if (count($flats) != 1) return $this->failtown('format: `spark install -v1.0.0 name`');
+        $spark_name = $flats[0];
+        $version = array_key_exists('v', $flags) ? $flags['v'] : 'HEAD';
 
         // retrieve the spark details
         SparkUtils::line("Retrieving spark detail from " . $this->spark_source->get_url());
-        $spark = $this->spark_source->get_spark_detail($spark_name);
+        $spark = $this->spark_source->get_spark_detail($spark_name, $version);
 
         // retrieve the spark
         SparkUtils::line("From Downtown! Retrieving spark from " . $spark->location_detail());

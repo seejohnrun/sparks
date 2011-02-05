@@ -7,7 +7,8 @@ require_once 'spark_types/zip_spark.php';
 class SparkSource {
 
     function get_spark_detail($spark_name, $version = 'HEAD') {
-        $json_data = file_get_contents('http://' . $this->url . "/packages/$spark_name/versions/$version/spec.json");
+        $json_data = @file_get_contents('http://' . $this->url . "/packages/$spark_name/versions/$version/spec.json");
+        if (!$json_data) throw new SparkException("No such spark: $spark_name ($version)");
         $data = json_decode($json_data);
 
         if ($data->repository_type == 'hg') return new MercurialSpark($spark_name, $data);
