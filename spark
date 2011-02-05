@@ -1,12 +1,12 @@
 #!/usr/bin/env php
 <?php
 
-require_once 'spark_support/spark_source.php';
-require_once 'spark_support/spark_cli.php';
+require_once 'lib/spark/spark_source.php';
+require_once 'lib/spark/spark_cli.php';
 
 // define a source
 $sources = array();
-if ($fh = @fopen(dirname(__FILE__) . '/spark_support/sources', 'r')) {
+if ($fh = @fopen(dirname(__FILE__) . '/lib/spark/sources', 'r')) {
     while ($line = fgets($fh)) {
         $line = trim($line);
         if ($line && $line[0] != '#') $sources[] = new SparkSource($line);
