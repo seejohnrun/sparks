@@ -57,10 +57,8 @@ class SparkCLI {
         SparkUtils::line($error_message);
     }
 
-    // commands
-
     private function remove($args) {
-        if (count($args) != 1) return $this->failtown('spark remove <name>');
+        if (count($args) != 1) return $this->failtown('Which spark do you want to remove?');
         list($spark_name) = $args;
 
         $dir = "./third_party/$spark_name";
@@ -93,7 +91,7 @@ class SparkCLI {
 
         SparkUtils::line("Installing spark");
         $spark->install();
-        SparkUtils::line('Spark installed to ' . $spark->installed_path() . ' - He\'s on fire!');
+        SparkUtils::line('Spark installed to ' . $spark->installed_path() . ' - You\'re on fire!');
     }
 
 }
