@@ -8,4 +8,4 @@ $source = new SparkSource('sparks.oconf.org');
 
 // take commands
 $cli = new SparkCLI($source);
-if ($argc > 1) $cli->execute($argv[1], array_slice($argv, 2));
+$cli->execute($argv[1], array_slice($argv, 2));

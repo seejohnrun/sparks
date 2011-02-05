@@ -34,8 +34,8 @@ class SparkUtils {
         } 
     } 
 
-    static function line($msg) {
-        echo "[SPARK] $msg\n";
+    static function line($msg = '', $s = null) {
+        foreach(explode("\n", $msg) as $line) echo !$s ? "$line\n" : "[ $s ]  $line\n";
     }
 
 }

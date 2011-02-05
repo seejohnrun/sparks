@@ -9,6 +9,18 @@ class Spark {
         $this->version = $this->data->version;
         $this->base_location = $this->data->base_location;
         
+        // see if this is deactived
+        if ($this->data->is_deactivated) {
+            $msg = 'Woah there - it seems the spark you want has been deactivated by the author';
+            if ($this->data->spark_home) $msg .= "\nLook for different versions at: " . $this->data->spark_home;
+            throw new SparkException($msg);
+        }
+
+        if ($this->data->is_unsupported) {
+            SparkUtils::line('WARNING: This spark is no longer supported.');
+            SparkUtils::line('You can keep using it, or look for an alternate');
+        }
+        
         // used internally
         $this->temp_token = 'spark-' . $this->spark_id . '-' . time();
         $this->temp_path = sys_get_temp_dir() . '/' . $this->temp_token;

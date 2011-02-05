@@ -14,7 +14,9 @@ class SparkCLI {
         'list' => 'lister',
         'remove' => 'remove',
         'source' => 'source',
-        'version' => 'version'
+        'version' => 'version',
+        'help' => 'help',
+        '' => 'index' // default action
     );
 
     function __construct($spark_source) {
@@ -34,6 +36,13 @@ class SparkCLI {
         }
     }
 
+    private function index($args) {
+        SparkUtils::line('Spark (v' . SPARK_VERSION . ')');
+        SparkUtils::line('by John Crepezzi (@seejohnrun) and Kenny Katzgrau (@_kennyk_)');
+        SparkUtils::line();
+        SparkUtils::line('For help: `php tools/spark help`');
+    }
+
     // list the installed sparks
     private function lister() {
         foreach(scandir(SPARK_PATH) as $item) {
@@ -46,7 +55,16 @@ class SparkCLI {
     }
 
     private function version() {
-        SparkUtils::line('version: ' . SPARK_VERSION);
+        SparkUtils::line(SPARK_VERSION);
+    }
+
+    private function help() {
+        SparkUtils::line('install   # Install a spark');
+        SparkUtils::line('remove    # Remove a spark');
+        SparkUtils::line('list      # List installed sparks');
+        SparkUtils::line('source    # Display the spark source URL');
+        SparkUtils::line('version   # Display the installed spark version');
+        SparkUtils::line('help      # This message');
     }
 
     private function source() {
@@ -54,8 +72,8 @@ class SparkCLI {
     }
 
     private function failtown($error_message) {
-        SparkUtils::line('Uh-oh!');
-        SparkUtils::line($error_message);
+        SparkUtils::line('Uh-oh!', 'ERROR');
+        SparkUtils::line($error_message, 'ERROR');
     }
 
     private function remove($args) {
@@ -83,16 +101,16 @@ class SparkCLI {
         $version = array_key_exists('v', $flags) ? $flags['v'] : 'HEAD';
 
         // retrieve the spark details
-        SparkUtils::line("Retrieving spark detail from " . $this->spark_source->get_url());
+        SparkUtils::line("Retrieving spark detail from " . $this->spark_source->get_url(), 'SPARK');
         $spark = $this->spark_source->get_spark_detail($spark_name, $version);
 
         // retrieve the spark
-        SparkUtils::line("From Downtown! Retrieving spark from " . $spark->location_detail());
+        SparkUtils::line("From Downtown! Retrieving spark from " . $spark->location_detail(), 'SPARK');
         $spark->retrieve();
 
-        SparkUtils::line("Installing spark");
+        SparkUtils::line("Installing spark", 'SPARK');
         $spark->install();
-        SparkUtils::line('Spark installed to ' . $spark->installed_path() . ' - You\'re on fire!');
+        SparkUtils::line('Spark installed to ' . $spark->installed_path() . ' - You\'re on fire!', 'SPARK');
     }
 
 }
