@@ -18,4 +18,9 @@ And then you can load the package like so:
 
 ## Removing a package
 
-    $ tools/spark remove gravatay
+    $ tools/spark remove -v1.0 gravatay  # remove a specific version
+    $ tools/spark remove gravatay -f  # remove all
+
+## List installed
+
+    $ tools/spark list
