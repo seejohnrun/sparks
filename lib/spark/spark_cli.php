@@ -83,7 +83,7 @@ class SparkCLI {
         $flats = array();
         $flags = array();
         foreach($args as $arg) {
-            preg_match('/^(\-?[a-zA-Z])([^\s]*)$/', $arg, &$matches);
+            preg_match('/^(\-?[a-zA-Z])([^\s]*)$/', $arg, $matches);
             if (count($matches) != 3) continue;
             $matches[0][0] == '-' ? $flags[$matches[1][1]] = $matches[2] : $flats[] = $matches[0];
         }
@@ -110,7 +110,7 @@ class SparkCLI {
         $flats = array();
         $flags = array();
         foreach($args as $arg) {
-            preg_match('/^(\-?[a-zA-Z])([^\s]+)$/', $arg, &$matches);
+            preg_match('/^(\-?[a-zA-Z])([^\s]+)$/', $arg, $matches);
             if (count($matches) != 3) continue;
             $matches[0][0] == '-' ? $flags[$matches[1][1]] = $matches[2] : $flats[] = $matches[0];
         }
