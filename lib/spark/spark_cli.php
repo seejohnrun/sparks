@@ -90,7 +90,7 @@ class SparkCLI {
 
         if (count($flats) != 1) return $this->failtown('Which spark do you want to remove?');
         $spark_name = $flats[0];
-        $version = $flags['v'];
+        $version = array_key_exists('v', $flags) ? $flags['v'] : null;
 
         // figure out what to remove and make sure its isntalled
         $dir_to_remove = SPARK_PATH . ($version == null ? "/$spark_name" : "/$spark_name/$version");

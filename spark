@@ -22,4 +22,8 @@ if (count($sources) == 0) {
 
 // take commands
 $cli = new SparkCLI($sources);
-$cli->execute($argv[1], array_slice($argv, 2));
+
+$cmd = $argc > 1 ? $argv[1] : null;
+$args = $argc > 2 ? array_slice($argv, 2) : array();
+
+$cli->execute($cmd, $args);
