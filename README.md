@@ -24,3 +24,22 @@ And then you can load the package like so:
 ## List installed
 
     $ tools/spark list
+
+## Conventions
+
+There needs to be some sort of namespacing in place to avoid conflicts with standard
+application code. Perhaps perfixing everything with spark.?
+
+    $this->load->add_package_path('sparks/wutang');
+   
+    $this->load->helper('spark.wutang'); # spark_wutang_helper.php, gross
+    $this->load->library('spark.wutang.name');
+
+Actually, by forcing a prefix with spark., we'd be able to load files much
+faster. Absolutely no guessing, which saves a lot of disk I/O.
+
+But then what would the classname be? $this->spark_wutang_lib? Ack!
+
+## Bootstrap
+
+Some sparks might involve the db. Do we provide setUp and tearDown? Bootstrap for ordinary loads?
