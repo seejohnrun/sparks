@@ -25,6 +25,16 @@ And then you can load the package like so:
 
     $ tools/spark list
 
+---
+
+## Install
+
+Go to your favorite CI project, and run (must have CURL installed):
+
+    $ php -r "$(curl -fsSL http://www.getsparks.org/static/install.php)"    
+
+---
+
 ## Conventions
 
 There needs to be some sort of namespacing in place to avoid conflicts with standard
