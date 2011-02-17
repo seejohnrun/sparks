@@ -8,6 +8,15 @@ class GitSpark extends Spark {
         $this->tag = $this->data->version;
     }
 
+    static function get_spark($data) {
+        if (self::git_installed()) {
+            return new GitSpark($data);
+        } else {
+            SparkUtils::warning('Git not found - reverting to archived copy');
+            return new ZipSpark($data);
+        }
+    }
+
     private static function git_installed() {
         return !!`git`;
     }

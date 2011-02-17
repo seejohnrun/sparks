@@ -47,8 +47,8 @@ class SparkSource {
     }
 
     private function get_spark($data) {
-        if ($data->repository_type == 'hg') return new MercurialSpark($data);
-        else if ($data->repository_type == 'git') return new GitSpark($data);
+        if ($data->repository_type == 'hg') return MercurialSpark::get_spark($data);
+        else if ($data->repository_type == 'git') return GitSpark::get_spark($data);
         else if ($data->repository_type == 'zip') return new ZipSpark($data);
         else throw new Exception('Unknown repository type: ' . $data->repository_type);
     }
