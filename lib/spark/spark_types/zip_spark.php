@@ -2,8 +2,8 @@
 
 class ZipSpark extends Spark {
 
-    function __construct($name, $data) {
-        parent::__construct($name, $data);
+    function __construct($data) {
+        parent::__construct($data);
         $this->temp_file = $this->temp_path . '.zip';
     }
 
