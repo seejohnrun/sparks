@@ -6,7 +6,7 @@ class Spark {
         $this->data = $data;
         $this->name = $this->data->name;
         $this->spark_id = $this->data->id;
-        $this->version = $this->data->version;
+        $this->version = property_exists($this->data, 'version') ? $this->data->version : null;
         $this->base_location = $this->data->base_location;
        
         // used internally
