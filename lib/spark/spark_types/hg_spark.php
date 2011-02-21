@@ -4,7 +4,7 @@ class MercurialSpark extends Spark {
 
     function __construct($data) {
         parent::__construct($data);
-        $this->tag = $this->data->version;
+        $this->tag = $this->version;
     }
 
     static function get_spark($data) {
