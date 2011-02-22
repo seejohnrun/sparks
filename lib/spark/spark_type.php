@@ -1,6 +1,6 @@
 <?php
 
-class Spark {
+class SparkType {
 
     function __construct($data) {
         $this->data = $data;

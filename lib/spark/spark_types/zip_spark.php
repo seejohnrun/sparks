@@ -1,6 +1,6 @@
 <?php
 
-class ZipSpark extends Spark {
+class ZipSpark extends SparkType {
 
     function __construct($data) {
         parent::__construct($data);

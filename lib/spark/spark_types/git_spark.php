@@ -1,6 +1,6 @@
 <?php
 
-class GitSpark extends Spark {
+class GitSpark extends SparkType {
 
     function __construct($data) {
         if (!self::git_installed()) throw new SparkException('You have to have git to install this spark.');

@@ -1,6 +1,6 @@
 <?php
 
-class MercurialSpark extends Spark {
+class MercurialSpark extends SparkType {
 
     function __construct($data) {
         parent::__construct($data);
