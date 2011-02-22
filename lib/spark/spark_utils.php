@@ -17,6 +17,17 @@ if ( !function_exists('sys_get_temp_dir')) {
 
 class SparkUtils {
 
+    private static $buffer = false;
+    private static $lines = array();
+
+    static function get_lines() {
+        return self::$lines;
+    }
+
+    static function buffer() {
+        self::$buffer = true;
+    }
+
     static function remove_full_directory($dir, $vocally = false) { 
         if (is_dir($dir)) { 
             $objects = scandir($dir); 
@@ -47,7 +58,13 @@ class SparkUtils {
     }
 
     static function line($msg = '', $s = null) {
-        foreach(explode("\n", $msg) as $line) echo !$s ? "$line\n" : "[ $s ]  $line\n";
+        foreach(explode("\n", $msg) as $line) {
+            if (self::$buffer) {
+                self::$lines[] = $line;
+            } else {
+                echo !$s ? "$line\n" : "[ $s ]  $line\n"; 
+            }
+        }
     }
 
 }
