@@ -5,7 +5,7 @@ class ZipSpark extends Spark {
     function __construct($data) {
         parent::__construct($data);
         $this->temp_file = $this->temp_path . '.zip';
-        $this->archive_url = $data->archive_url;
+        $this->archive_url = property_exists($this->data, 'archive_url') ? $this->data->archive_url : null;
     }
 
     function location_detail() {
