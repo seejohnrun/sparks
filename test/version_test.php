@@ -15,6 +15,7 @@ class Version_test extends PHPUnit_Framework_TestCase {
         $func($this->cli); 
         $t = ob_get_contents();
         ob_end_clean();
+        if ($t == '') return array(); // empty
         return explode("\n", substr($t, 0, count($t) - 2));
     }
 
@@ -29,7 +30,7 @@ class Version_test extends PHPUnit_Framework_TestCase {
         $clines = $this->capture_buffer_lines(function($cli) {
             $cli->execute('sources');
         });
-        $this->assertEquals(array($this->source_names[0]), $clines);
+        $this->assertEquals($this->source_names, $clines);
     }
 
     function test_bad_command() {
@@ -37,6 +38,13 @@ class Version_test extends PHPUnit_Framework_TestCase {
             $cli->execute('fake');
         });
         $this->assertEquals(array('[ ERROR ]  Uh-oh!', '[ ERROR ]  Unknown action: fake'), $clines);
+    }
+
+    function test_search_empty() {
+        $clines = $this->capture_buffer_lines(function($cli) {
+            $cli->execute('search', array('nothing_found_here'));
+        });
+        $this->assertEquals(array(), $clines);
     }
 
 }
