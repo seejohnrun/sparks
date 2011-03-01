@@ -4,7 +4,7 @@ require_once dirname(__FILE__) . '/spark_utils.php';
 require_once dirname(__FILE__) . '/spark_exception.php';
 require_once dirname(__FILE__) . '/spark_source.php';
 
-define('SPARK_VERSION', '0.0.2');
+define('SPARK_VERSION', '0.0.3');
 define('SPARK_PATH', './sparks');
 
 class SparkCLI {
