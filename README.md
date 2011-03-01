@@ -2,28 +2,36 @@
 
 Spark is a way to pull down packages automatically
 
-    $ tools/spark install -v1.1 gravatar_helper
+    $ tools/spark install -v1.2 gravatar_helper
 
 And then you can load the package like so:
 
-    $this->add_package_path('sparks/gravatar_helper/1.1');
-    $this->load->helper('gravatar');
+    $this->load->spark('gravatar_helper/1.2');
+    echo Gravatar_helper::from_email('john.crepezzi@gmail.com');
 
 ---
 
 ## Adding a package
 
-    $ tools/spark install -v1.0 gravatay
-    $ tools/spark install gravatay # most recent version
+    $ tools/spark install -v1.2 gravatar
+    $ tools/spark install gravatar # most recent version
 
 ## Removing a package
 
-    $ tools/spark remove -v1.0 gravatay  # remove a specific version
-    $ tools/spark remove gravatay -f  # remove all
+    $ tools/spark remove -v1.2 gravatar  # remove a specific version
+    $ tools/spark remove gravatar -f  # remove all
 
-## List installed
+## Search for a package
+
+    $ tools/spark search gravatar
+
+## List installed packages
 
     $ tools/spark list
+
+## Get Help
+
+    $ tools/spark help
 
 ---
 
