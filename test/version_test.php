@@ -5,14 +5,38 @@ require 'lib/spark/spark_cli.php';
 class Version_test extends PHPUnit_Framework_TestCase {
 
     function setUp() {
-        SparkUtils::buffer();
-        $this->sources[] = new SparkSource('getsparks.org');
+        $this->source_names[] = 'getsparks.org';
+        $this->sources = array_map(function($n) { return new SparkSource($n); }, $this->source_names);
         $this->cli = new SparkCLI($this->sources);
     }
 
+    private function capture_buffer_lines($func) {
+        ob_start();
+        $func($this->cli); 
+        $t = ob_get_contents();
+        ob_end_clean();
+        return explode("\n", substr($t, 0, count($t) - 2));
+    }
+
     function test_version() {
-        $this->cli->execute('version'); 
-        $this->assertEquals(array(SPARK_VERSION), SparkUtils::get_lines());
+        $clines = $this->capture_buffer_lines(function($cli) {
+            $cli->execute('version'); 
+        });
+        $this->assertEquals(array(SPARK_VERSION), $clines);
+    }
+
+    function test_sources() {
+        $clines = $this->capture_buffer_lines(function($cli) {
+            $cli->execute('sources');
+        });
+        $this->assertEquals(array($this->source_names[0]), $clines);
+    }
+
+    function test_bad_command() {
+        $clines = $this->capture_buffer_lines(function($cli) {
+            $cli->execute('fake');
+        });
+        $this->assertEquals(array('[ ERROR ]  Uh-oh!', '[ ERROR ]  Unknown action: fake'), $clines);
     }
 
 }
