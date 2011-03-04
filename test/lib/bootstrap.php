@@ -1,6 +1,6 @@
 <?php
 
-define('SPARK_PATH', __DIR__.'/sparks');
+define('SPARK_PATH', __DIR__.'/test-sparks');
 
 require __DIR__.'/../../lib/spark/spark_cli.php';
 
