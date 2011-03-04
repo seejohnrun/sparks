@@ -11,6 +11,7 @@ class SparkCLI {
 
     private static $commands = array(
         'install' => 'install',
+        'reinstall' => 'reinstall',
         'list' => 'lister',
         'remove' => 'remove',
         'search' => 'search',
@@ -93,13 +94,7 @@ class SparkCLI {
 
     private function remove($args) {
  
-        $flats = array();
-        $flags = array();
-        foreach($args as $arg) {
-            preg_match('/^(\-?[a-zA-Z])([^\s]*)$/', $arg, $matches);
-            if (count($matches) != 3) continue;
-            $matches[0][0] == '-' ? $flags[$matches[1][1]] = $matches[2] : $flats[] = $matches[0];
-        }
+        list($flats, $flags) = $this->prep_args($args);
 
         if (count($flats) != 1) return $this->failtown('Which spark do you want to remove?');
         $spark_name = $flats[0];
@@ -120,13 +115,7 @@ class SparkCLI {
 
    private function install($args) {
 
-        $flats = array();
-        $flags = array();
-        foreach($args as $arg) {
-            preg_match('/^(\-?[a-zA-Z])([^\s]+)$/', $arg, $matches);
-            if (count($matches) != 3) continue;
-            $matches[0][0] == '-' ? $flags[$matches[1][1]] = $matches[2] : $flats[] = $matches[0];
-        }
+       list($flats, $flags) = $this->prep_args($args);
 
         if (count($flats) != 1) return $this->failtown('format: `spark install -v1.0.0 name`');
         $spark_name = $flats[0];
@@ -152,6 +141,43 @@ class SparkCLI {
         SparkUtils::notice('Installing spark');
         $spark->install();
         SparkUtils::notice('Spark installed to ' . $spark->installed_path() . ' - You\'re on fire!');
+    }
+
+    private function reinstall($args) {
+ 
+        list($flats, $flags) = $this->prep_args($args);
+
+        if (count($flats) != 1) return $this->failtown('format: `spark reinstall -v1.0.0 name`');
+        $spark_name = $flats[0];
+        $version = array_key_exists('v', $flags) ? $flags['v'] : null;
+
+        if ($version == null && !array_key_exists('f', $flags)) throw new SparkException("Please specify a version to reinstall, or use -f to remove all versions and install latest.");
+        
+        $this->remove($args);
+        $this->install($args);
+    }
+
+    /**
+     * Prepares the command line arguments for use.
+     * 
+     * Usage:
+     * list($flats, $flags) = $this->prep_args($args);
+     * 
+     * @param   array   the arguments array
+     * @return  array   the flats and flags
+     */
+    private function prep_args($args) {
+
+        $flats = array();
+        $flags = array();
+
+        foreach($args as $arg) {
+            preg_match('/^(\-?[a-zA-Z])([^\s]*)$/', $arg, $matches);
+            if (count($matches) != 3) continue;
+            $matches[0][0] == '-' ? $flags[$matches[1][1]] = $matches[2] : $flats[] = $matches[0];
+        }
+        
+        return array($flats, $flags);
     }
 
 }
