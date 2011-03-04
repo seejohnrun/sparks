@@ -21,6 +21,11 @@ And then you can load the package like so:
     $ tools/spark remove -v1.2 gravatar  # remove a specific version
     $ tools/spark remove gravatar -f  # remove all
 
+## Reinstalling a package
+
+    $ tools/spark reinstall -v1.2 gravatar  # reinstall a specific version
+    $ tools/spark reinstall gravatar -f  # remove all versions and install latest
+
 ## Search for a package
 
     $ tools/spark search gravatar
