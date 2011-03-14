@@ -73,7 +73,7 @@ class SparkCLI {
         foreach($this->spark_sources as $source) {
             $results = $source->search($term);
             foreach ($results as $result) {
-                $result_line = $result->name;
+                $result_line = "\033[33m$result->name\033[0m - $result->summary";
                 // only show the source information if there are multiple sources
                 if (count($this->spark_sources) > 1) $result_line .= " (source: $source->url)";
                 SparkUtils::line($result_line);

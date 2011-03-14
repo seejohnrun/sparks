@@ -8,6 +8,11 @@ class SparkType {
         $this->spark_id = $this->data->id;
         $this->version = property_exists($this->data, 'version') ? $this->data->version : null;
         $this->base_location = $this->data->base_location;
+
+        // Assign other data we don't have
+        foreach ($this->data as $k=>$v) {
+            if (!property_exists($this, $k)) $this->$k = $v;
+        }
        
         // used internally
         $this->temp_token = 'spark-' . $this->spark_id . '-' . time();
