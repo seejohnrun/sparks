@@ -1,8 +1,10 @@
 <?php
 
-class Install_Test extends Spark_Test_Case {
+class Install_Test extends Spark_Test_Case
+{
 
-    function test_install_with_version() {
+    function test_install_with_version()
+    {
         $clines = $this->capture_buffer_lines(function($cli) {
             $cli->execute('install', array('-v1.0', 'example-spark'));
         });
@@ -11,7 +13,8 @@ class Install_Test extends Spark_Test_Case {
         $this->assertEquals(true, $success);
     }
 
-    function test_install_without_version() {
+    function test_install_without_version() 
+    {
         $clines = $this->capture_buffer_lines(function($cli) {
             $cli->execute('install', array('example-spark'));
         });
@@ -20,7 +23,8 @@ class Install_Test extends Spark_Test_Case {
         $this->assertEquals(true, $success);
     }
 
-    function test_install_with_invalid_spark() {
+    function test_install_with_invalid_spark()
+    {
         $clines = $this->capture_buffer_lines(function($cli) {
             $cli->execute('install', array('jjks7878erHjhsjdkksj'));
         });
@@ -29,7 +33,8 @@ class Install_Test extends Spark_Test_Case {
         $this->assertEquals(true, $success);
     }
 
-    function test_install_with_invalid_spark_version() {
+    function test_install_with_invalid_spark_version()
+    {
         $clines = $this->capture_buffer_lines(function($cli) {
             $cli->execute('install', array('v9.4', 'example-spark'));
         });

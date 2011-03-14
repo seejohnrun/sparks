@@ -1,19 +1,25 @@
 <?php
 
-define('SPARK_PATH', __DIR__.'/test-sparks');
+define('SPARK_PATH', __DIR__ . '/test-sparks');
 
-require __DIR__.'/../../lib/spark/spark_cli.php';
+require __DIR__ . '/../../lib/spark/spark_cli.php';
 
-class Spark_Test_Case extends PHPUnit_Framework_TestCase {
+class Spark_Test_Case extends PHPUnit_Framework_TestCase
+{
 
-    function setUp() {
+    function setUp()
+    {
         $this->source_names[] = 'getsparks.org';
-        $this->sources = array_map(function($n) { return new SparkSource($n); }, $this->source_names);
+        $this->sources = array_map(function($n) {
+            return new SparkSource($n); 
+        }, $this->source_names);
         $this->cli = new SparkCLI($this->sources);
     }
 
-    function tearDown() {
-        if (is_dir(SPARK_PATH . '/example-spark')) {
+    function tearDown()
+    {
+        if (is_dir(SPARK_PATH . '/example-spark'))
+        {
             SparkUtils::remove_full_directory(SPARK_PATH . '/example-spark');
         }
     }

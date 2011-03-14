@@ -1,8 +1,10 @@
 <?php
 
-class Search_test extends Spark_Test_Case {
+class Search_test extends Spark_Test_Case
+{
 
-    function test_search() {
+    function test_search()
+    {
         $clines = $this->capture_buffer_lines(function($cli) {
             $cli->execute('search', array('markdown'));
         });
