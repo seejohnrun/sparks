@@ -11,14 +11,14 @@ class Spark_CLI
 {
 
     private static $commands = array(
+        'help' => 'help',
         'install' => 'install',
-        'reinstall' => 'reinstall',
         'list' => 'lister',
+        'reinstall' => 'reinstall',
         'remove' => 'remove',
         'search' => 'search',
         'sources' => 'sources',
         'version' => 'version',
-        'help' => 'help',
         '' => 'index' // default action
     );
 
@@ -73,6 +73,7 @@ class Spark_CLI
     private function help()
     {
         Spark_utils::line('install   # Install a spark');
+        Spark_utils::line('reinstall # Reinstall a spark');
         Spark_utils::line('remove    # Remove a spark');
         Spark_utils::line('list      # List installed sparks');
         Spark_utils::line('search    # Search for a spark');
