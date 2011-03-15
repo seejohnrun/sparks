@@ -1,6 +1,6 @@
 <?php
 
-class Remove_Test extends Spark_Test_Case
+class Remove_test extends Spark_test_case
 {
 
     function test_remove_with_version()
@@ -12,7 +12,7 @@ class Remove_Test extends Spark_Test_Case
         });
         $success = (bool) (strpos(end($clines), '[ SPARK ]  Spark removed') === 0 && ! is_dir(SPARK_PATH.'/example-spark'));
         $this->assertEquals(true, $success);
-        SparkUtils::remove_full_directory(SPARK_PATH . '/example-spark');
+        Spark_utils::remove_full_directory(SPARK_PATH . '/example-spark');
     }
 
     function test_remove_without_flags() 
@@ -23,7 +23,7 @@ class Remove_Test extends Spark_Test_Case
         });
         $success = (bool) (strpos(end($clines), '[ ERROR ]  Please specify') === 0 && is_dir(SPARK_PATH.'/example-spark'));
         $this->assertEquals(true, $success);
-        SparkUtils::remove_full_directory(SPARK_PATH . '/example-spark');
+        Spark_utils::remove_full_directory(SPARK_PATH . '/example-spark');
     }
 
     function test_remove_with_f_flag()
@@ -34,7 +34,7 @@ class Remove_Test extends Spark_Test_Case
         });
         $success = (bool) (strpos(end($clines), '[ SPARK ]  Spark removed') === 0 && ! is_dir(SPARK_PATH.'/example-spark'));
         $this->assertEquals(true, $success);
-        SparkUtils::remove_full_directory(SPARK_PATH . '/example-spark');
+        Spark_utils::remove_full_directory(SPARK_PATH . '/example-spark');
     }
 
     function test_remove_with_invalid_version()
@@ -45,7 +45,7 @@ class Remove_Test extends Spark_Test_Case
         });
         $success = (bool) (strpos(end($clines), '[ SPARK ]  Looks like that spark isn\'t installed') === 0 && is_dir(SPARK_PATH.'/example-spark'));
         $this->assertEquals(true, $success);
-        SparkUtils::remove_full_directory(SPARK_PATH . '/example-spark');
+        Spark_utils::remove_full_directory(SPARK_PATH . '/example-spark');
     }
 
 }

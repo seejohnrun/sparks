@@ -1,6 +1,6 @@
 <?php
 
-class Search_test extends Spark_Test_Case
+class Search_test extends Spark_test_case
 {
 
     function test_search()

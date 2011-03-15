@@ -1,6 +1,6 @@
 <?php
 
-class Version_Test extends Spark_Test_Case
+class Version_test extends Spark_test_case
 {
 
     function test_version()

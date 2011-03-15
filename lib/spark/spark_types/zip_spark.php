@@ -1,6 +1,6 @@
 <?php
 
-class ZipSpark extends SparkType
+class Zip_spark extends Spark_type
 {
 
     function __construct($data)
@@ -35,7 +35,7 @@ class ZipSpark extends SparkType
         {
             if (!self::unzip_installed())
             {
-                throw new SparkException('You have to install PECL ZipArchive or `unzip` to install this spark.');
+                throw new Spark_exception('You have to install PECL ZipArchive or `unzip` to install this spark.');
             }
             `unzip $this->temp_file -d $this->temp_path`;
         }

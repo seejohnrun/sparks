@@ -1,6 +1,6 @@
 <?php
 
-class MercurialSpark extends SparkType
+class Mercurial_spark extends Spark_type
 {
 
     function __construct($data)
@@ -13,12 +13,12 @@ class MercurialSpark extends SparkType
     {
         if (self::hg_installed())
         {
-            return new MercurialSpark($data);
+            return new Mercurial_spark($data);
         }
         else
         {
-            SparkUtils::warning('Mercurial not found - reverting to archived copy');
-            return new ZipSpark($data);
+            Spark_utils::warning('Mercurial not found - reverting to archived copy');
+            return new Zip_spark($data);
         }
     }
 
@@ -36,7 +36,7 @@ class MercurialSpark extends SparkType
     {
         `hg clone -r$this->tag $this->base_location $this->temp_path`;
         // remove the mercurial directory
-        SparkUtils::remove_full_directory("$this->temp_path/.hg");
+        Spark_utils::remove_full_directory("$this->temp_path/.hg");
         return file_exists($this->temp_path);
     }
 

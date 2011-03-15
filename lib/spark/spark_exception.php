@@ -1,6 +1,6 @@
 <?php
 
-class SparkException extends Exception
+class Spark_exception extends Exception
 {
 
 }

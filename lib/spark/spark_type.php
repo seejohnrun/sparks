@@ -1,6 +1,6 @@
 <?php
 
-class SparkType
+class Spark_type
 {
 
     function __construct($data)
@@ -48,19 +48,19 @@ class SparkType
         {
             $msg = 'Woah there - it seems the spark you want has been deactivated';
             if ($this->data->spark_home) $msg .= "\nLook for different versions at: " . $this->data->spark_home;
-            throw new SparkException($msg);
+            throw new Spark_exception($msg);
         }
         // see if this is unsupported
         if ($this->data->is_unsupported)
         {
-            SparkUtils::warning('This spark is no longer supported.');
-            SparkUtils::warning('You can keep using it, or look for an alternate');
+            Spark_utils::warning('This spark is no longer supported.');
+            Spark_utils::warning('You can keep using it, or look for an alternate');
         }
         // tell the user if its already installed and throw an error
         $this->installation_path = SPARK_PATH . "/$this->name/$this->version";
         if (is_dir($this->installation_path))
         {
-            throw new SparkException("Already installed.  Try `php tools/spark remove $this->name`");
+            throw new Spark_exception("Already installed.  Try `php tools/spark remove $this->name`");
         }
     }
 

@@ -18,7 +18,7 @@ if ( !function_exists('sys_get_temp_dir'))
     }
 }
 
-class SparkUtils
+class Spark_utils
 {
 
     private static $buffer = false;

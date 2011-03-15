@@ -4,7 +4,7 @@ require_once 'spark_types/git_spark.php';
 require_once 'spark_types/hg_spark.php';
 require_once 'spark_types/zip_spark.php';
 
-class SparkSource
+class Spark_source
 {
 
     function __construct($url)
@@ -28,7 +28,7 @@ class SparkSource
         {
             $message = "Error retrieving spark detail from source: $this->url";
             if ($data != null) $message .= " ($data->message)";
-            throw new SparkException($message);
+            throw new Spark_exception($message);
         }
         // Get the detail for this spark
         return $this->get_spark($data->spec);
@@ -44,7 +44,7 @@ class SparkSource
         {
             $message = "Error searching source: $this->url";
             if ($data != null) $message .= " ($data->message)";
-            SparkUtils::warning($message);
+            Spark_utils::warning($message);
             return array();
         }
         // Get sparks for each one
@@ -58,9 +58,9 @@ class SparkSource
 
     private function get_spark($data)
     {
-        if ($data->repository_type == 'hg') return MercurialSpark::get_spark($data);
-        else if ($data->repository_type == 'git') return GitSpark::get_spark($data);
-        else if ($data->repository_type == 'zip') return new ZipSpark($data);
+        if ($data->repository_type == 'hg') return Mercurial_spark::get_spark($data);
+        else if ($data->repository_type == 'git') return Git_spark::get_spark($data);
+        else if ($data->repository_type == 'zip') return new Zip_spark($data);
         else throw new Exception('Unknown repository type: ' . $data->repository_type);
     }
 
