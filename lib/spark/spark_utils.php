@@ -18,8 +18,7 @@ if ( !function_exists('sys_get_temp_dir'))
     }
 }
 
-class Spark_utils
-{
+class Spark_utils {
 
     private static $buffer = false;
     private static $lines = array();

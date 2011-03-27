@@ -1,7 +1,6 @@
 <?php
 
-class Zip_spark extends Spark_type
-{
+class Zip_spark extends Spark_type {
 
     function __construct($data)
     {

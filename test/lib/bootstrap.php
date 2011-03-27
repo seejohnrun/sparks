@@ -4,8 +4,7 @@ define('SPARK_PATH', __DIR__ . '/test-sparks');
 
 require __DIR__ . '/../../lib/spark/spark_cli.php';
 
-class Spark_test_case extends PHPUnit_Framework_TestCase
-{
+class Spark_test_case extends PHPUnit_Framework_TestCase {
 
     function setUp()
     {

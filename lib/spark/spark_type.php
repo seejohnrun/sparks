@@ -1,7 +1,6 @@
 <?php
 
-class Spark_type
-{
+class Spark_type {
 
     function __construct($data)
     {

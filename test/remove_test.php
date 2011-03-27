@@ -1,7 +1,6 @@
 <?php
 
-class Remove_test extends Spark_test_case
-{
+class Remove_test extends Spark_test_case {
 
     function test_remove_with_version()
     {

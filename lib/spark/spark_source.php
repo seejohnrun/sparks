@@ -4,8 +4,7 @@ require_once 'spark_types/git_spark.php';
 require_once 'spark_types/hg_spark.php';
 require_once 'spark_types/zip_spark.php';
 
-class Spark_source
-{
+class Spark_source {
 
     function __construct($url)
     {
