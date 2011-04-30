@@ -36,7 +36,10 @@ class Spark_type {
     {
         foreach ($this->dependencies as $dependency)
         {
-            $this->install_dependency($dependency);
+            if (!$dependency->is_direct)
+            {
+                $this->install_dependency($dependency);
+            }
         }
 
         @mkdir(SPARK_PATH); // Two steps for windows
