@@ -9,7 +9,7 @@ class Git_spark extends Spark_type {
             throw new Spark_exception('You have to have git to install this spark.');
         }
         parent::__construct($data);
-        $this->tag = $this->version;
+        $this->tag = $this->tag;
     }
 
     static function get_spark($data)
@@ -42,7 +42,12 @@ class Git_spark extends Spark_type {
         `cd $this->temp_path; git checkout $this->tag -b $this->temp_token`;
         // remove the git directory
         Spark_utils::remove_full_directory("$this->temp_path/.git");
-        return file_exists($this->temp_path);
+
+        if (!file_exists($this->temp_path))
+        {
+            throw new Spark_exception('Failed to retrieve the spark ;(');
+        }
+        return true;
     }
 
 }

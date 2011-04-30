@@ -10,6 +10,9 @@ class Spark_type {
         $this->version = property_exists($this->data, 'version') ? $this->data->version : null;
         $this->base_location = $this->data->base_location;
 
+        // Load the dependencies
+        $this->dependencies = property_exists($this->data, 'dependencies') ? $this->data->dependencies : array();
+
         // Assign other data we don't have
         foreach ($this->data as $k=>$v)
         {
@@ -31,6 +34,11 @@ class Spark_type {
 
     function install()
     {
+        foreach ($this->dependencies as $dependency)
+        {
+            $this->install_dependency($dependency);
+        }
+
         @mkdir(SPARK_PATH); // Two steps for windows
         @mkdir(SPARK_PATH . "/$this->name");
         $success = @rename($this->temp_path, $this->installation_path);
@@ -39,8 +47,26 @@ class Spark_type {
             $this->installed_path = $this->installation_path;
         }
     }
+
+    function install_dependency($dependency_data) {
+        // Get the spark object
+        $spark = null;
+        if ($dependency_data->repository_type == 'hg') $spark = Mercurial_spark::get_spark($dependency_data);
+        else if ($dependency_data->repository_type == 'git') $spark = Git_spark::get_spark($dependency_data);
+        else if ($dependency_data->repository_type == 'zip') $spark = new Zip_spark($dependency_data);
+        else throw new Exception('Unknown repository type: ' . $dependency_data->repository_type);
+        // Install the spark
+        if ($spark->verify(false)) { // if not installed, install
+            $spark->retrieve();
+            $spark->install();
+            Spark_utils::notice("Installed dependency: $spark->name to " . $spark->installed_path());
+        }
+        else {
+            Spark_utils::notice("Dependency $spark->name is already installed.");
+        }
+    }
     
-    function verify()
+    function verify($break_on_already_installed = true)
     {
         // see if this is deactivated
         if ($this->data->is_deactivated)
@@ -59,7 +85,15 @@ class Spark_type {
         $this->installation_path = SPARK_PATH . "/$this->name/$this->version";
         if (is_dir($this->installation_path))
         {
-            throw new Spark_exception("Already installed.  Try `php tools/spark remove $this->name`");
+            if ($break_on_already_installed)
+            {
+                throw new Spark_exception("Already installed.  Try `php tools/spark remove $this->name`");
+            }
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 

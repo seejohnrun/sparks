@@ -38,7 +38,12 @@ class Zip_spark extends Spark_type {
             }
             `unzip $this->temp_file -d $this->temp_path`;
         }
-        return file_exists($this->temp_path);
+
+        if (!file_exists($this->temp_path))
+        {
+            throw new Spark_exception('Failed to retrieve the spark ;(');
+        }
+        return true;
     }
 
 }

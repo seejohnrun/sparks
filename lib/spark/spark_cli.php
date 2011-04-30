@@ -180,12 +180,9 @@ class Spark_CLI {
 
         // retrieve the spark
         Spark_utils::notice("From Downtown! Retrieving spark from " . $spark->location_detail());
-        if (!$spark->retrieve()) 
-        {
-            throw new Spark_exception('Failed to retrieve the spark ;(');
-        }
+        $spark->retrieve();
 
-        Spark_utils::notice('Installing spark');
+        // Install it
         $spark->install();
         Spark_utils::notice('Spark installed to ' . $spark->installed_path() . ' - You\'re on fire!');
     }

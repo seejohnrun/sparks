@@ -5,7 +5,7 @@ class Mercurial_spark extends Spark_type {
     function __construct($data)
     {
         parent::__construct($data);
-        $this->tag = $this->version;
+        $this->tag = $this->tag;
     }
 
     static function get_spark($data)
@@ -36,7 +36,12 @@ class Mercurial_spark extends Spark_type {
         `hg clone -r$this->tag $this->base_location $this->temp_path`;
         // remove the mercurial directory
         Spark_utils::remove_full_directory("$this->temp_path/.hg");
-        return file_exists($this->temp_path);
+
+        if (!file_exists($this->temp_path))
+        {
+            throw new Spark_exception('Failed to retrieve the spark ;(');
+        }
+        return true;
     }
 
 }
