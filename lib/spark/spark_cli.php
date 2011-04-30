@@ -53,6 +53,7 @@ class Spark_CLI {
     // list the installed sparks
     private function lister()
     {
+        if (!is_dir(SPARK_PATH)) return; // no directory yet
         foreach(scandir(SPARK_PATH) as $item)
         {
             if (!is_dir(SPARK_PATH . "/$item") || $item[0] == '.') continue;
