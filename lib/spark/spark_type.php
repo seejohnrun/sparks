@@ -8,6 +8,7 @@ class Spark_type {
         $this->name = $this->data->name;
         $this->spark_id = $this->data->id;
         $this->version = property_exists($this->data, 'version') ? $this->data->version : null;
+        $this->tag = property_exists($this->data, 'tag') ? $this->data->tag : $this->version;
         $this->base_location = $this->data->base_location;
 
         // Load the dependencies
