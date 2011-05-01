@@ -11,7 +11,7 @@ class Zip_spark extends Spark_type {
 
     function location_detail()
     {
-        return "ZIP archive at $this->base_location";
+        return "ZIP archive at $this->archive_url";
     } 
 
     private static function unzip_installed()

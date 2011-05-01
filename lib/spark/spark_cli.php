@@ -17,6 +17,7 @@ class Spark_CLI {
         'remove' => 'remove',
         'search' => 'search',
         'sources' => 'sources',
+        'upgrade-system' => 'upgrade_system',
         'version' => 'version',
         '' => 'index' // default action
     );
@@ -48,6 +49,27 @@ class Spark_CLI {
     {
         Spark_utils::line('Spark (v' . SPARK_VERSION . ')');
         Spark_utils::line('For help: `php tools/spark help`');
+    }
+
+    private function upgrade_system() {
+        $tool_dir = dirname(__FILE__) . '/../../';
+        // Get version data
+        $source = $this->spark_sources[0];
+        if (!$source) throw new Spark_exception('No sources listed - unsure how to upgrade');
+        if (!($source_version_data = $source->outdated())) return; // We have an acceptable version
+        // Build a spark and download it
+        $data = null;
+        $data->name = 'Spark Manager';
+        $data->archive_url = $source_version_data->spark_manager_download_url;
+        $zip_spark = new Zip_spark($data);
+        $zip_spark->retrieve();
+        // Download the new version
+        // Remove the lib directory and the spark
+        Spark_utils::remove_full_directory($tool_dir . 'lib');
+        unlink($tool_dir . 'spark');
+        // Link up the new version
+        @rename($zip_spark->temp_path, $tool_dir);
+        @`chmod u+x {$tool_dir}spark`;
     }
 
     // list the installed sparks

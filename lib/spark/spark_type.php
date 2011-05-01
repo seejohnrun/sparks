@@ -6,10 +6,10 @@ class Spark_type {
     {
         $this->data = $data;
         $this->name = $this->data->name;
-        $this->spark_id = $this->data->id;
+        $this->spark_id = property_exists($this->data, 'id') ? $this->data->id : null;
         $this->version = property_exists($this->data, 'version') ? $this->data->version : null;
         $this->tag = property_exists($this->data, 'tag') ? $this->data->tag : $this->version;
-        $this->base_location = $this->data->base_location;
+        $this->base_location = property_exists($this->data, 'base_location') ? $this->data->base_location : null;
 
         // Load the dependencies
         $this->dependencies = property_exists($this->data, 'dependencies') ? $this->data->dependencies : array();
