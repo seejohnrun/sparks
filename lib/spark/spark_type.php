@@ -91,7 +91,7 @@ class Spark_type {
         {
             if ($break_on_already_installed)
             {
-                throw new Spark_exception("Already installed.  Try `php tools/spark remove $this->name`");
+                throw new Spark_exception("Already installed.  Try `php tools/spark reinstall $this->name`");
             }
             return false;
         }
