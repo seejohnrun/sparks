@@ -4,7 +4,7 @@ require_once dirname(__FILE__) . '/spark_utils.php';
 require_once dirname(__FILE__) . '/spark_exception.php';
 require_once dirname(__FILE__) . '/spark_source.php';
 
-define('SPARK_VERSION', '0.0.3');
+define('SPARK_VERSION', '0.0.2');
 ! defined('SPARK_PATH') AND define('SPARK_PATH', './sparks');
 
 class Spark_CLI {
@@ -53,6 +53,7 @@ class Spark_CLI {
 
     private function upgrade_system() {
         $tool_dir = dirname(__FILE__) . '/../../';
+        $tool_dir = realpath($tool_dir);
         // Get version data
         $source = $this->spark_sources[0];
         if (!$source) throw new Spark_exception('No sources listed - unsure how to upgrade');
@@ -68,10 +69,11 @@ class Spark_CLI {
         $zip_spark->retrieve();
         // Download the new version
         // Remove the lib directory and the spark
-        Spark_utils::remove_full_directory($tool_dir . 'lib');
-        unlink($tool_dir . 'spark');
+        unlink($tool_dir . '/spark');
+        Spark_utils::remove_full_directory($tool_dir . '/lib');
         // Link up the new version
-        @rename($zip_spark->temp_path, $tool_dir);
+        @rename($zip_spark->temp_path . '/lib', $tool_dir . '/lib');
+        @rename($zip_spark->temp_path . '/spark', $tool_dir . '/spark');
         @`chmod u+x {$tool_dir}spark`;
     }
 
