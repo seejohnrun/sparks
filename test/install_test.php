@@ -7,7 +7,7 @@ class Install_test extends Spark_test_case {
         $clines = $this->capture_buffer_lines(function($cli) {
             $cli->execute('install', array('-v1.0', 'example-spark'));
         });
-        $success = (bool) (strpos(end($clines), '[ SPARK ]  Spark installed') === 0);
+        $success = (bool) (strpos(end($clines), chr(27) . '[1;36m[ SPARK ]' . chr(27) . '[0m Spark installed') === 0);
         Spark_utils::remove_full_directory(SPARK_PATH . '/example-spark');
         $this->assertEquals(true, $success);
     }
@@ -17,7 +17,7 @@ class Install_test extends Spark_test_case {
         $clines = $this->capture_buffer_lines(function($cli) {
             $cli->execute('install', array('example-spark'));
         });
-        $success = (bool) (strpos(end($clines), '[ SPARK ]  Spark installed') === 0);
+        $success = (bool) (strpos(end($clines), chr(27) . '[1;36m[ SPARK ]' . chr(27) . '[0m Spark installed') === 0);
         Spark_utils::remove_full_directory(SPARK_PATH . '/example-spark');
         $this->assertEquals(true, $success);
     }
@@ -27,7 +27,7 @@ class Install_test extends Spark_test_case {
         $clines = $this->capture_buffer_lines(function($cli) {
             $cli->execute('install', array('jjks7878erHjhsjdkksj'));
         });
-        $success = (bool) (strpos(end($clines), '[ ERROR ]  Unable to find spark') === 0);
+        $success = (bool) (strpos(end($clines), chr(27) . '[1;31m[ ERROR ]' . chr(27) . '[0m Unable to find spark') === 0);
         Spark_utils::remove_full_directory(SPARK_PATH . '/example-spark');
         $this->assertEquals(true, $success);
     }
@@ -37,7 +37,7 @@ class Install_test extends Spark_test_case {
         $clines = $this->capture_buffer_lines(function($cli) {
             $cli->execute('install', array('v9.4', 'example-spark'));
         });
-        $success = (bool) (strpos(reset($clines), '[ ERROR ]  Uh-oh!') === 0);
+        $success = (bool) (strpos(reset($clines), chr(27) . '[1;31m[ ERROR ]' . chr(27) . '[0m Uh-oh!') === 0);
         Spark_utils::remove_full_directory(SPARK_PATH . '/example-spark');
         $this->assertEquals(true, $success);
     }

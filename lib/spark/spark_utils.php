@@ -60,17 +60,17 @@ class Spark_utils {
 
     static function notice($msg)
     {
-        self::line($msg, 'SPARK', "[1;36m");
+        self::line($msg, 'SPARK', '[1;36m');
     }
 
     static function error($msg)
     {
-        self::line($msg, 'ERROR', "[1;31m");
+        self::line($msg, 'ERROR', '[1;31m');
     }
 
     static function warning($msg)
     {
-        self::line($msg, 'WARNING', "[1;33m");
+        self::line($msg, 'WARNING', '[1;33m');
     }
 
     static function line($msg = '', $s = null, $color = null)

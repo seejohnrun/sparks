@@ -23,7 +23,7 @@ class Version_test extends Spark_test_case {
         $clines = $this->capture_buffer_lines(function($cli) {
             $cli->execute('fake');
         });
-        $this->assertEquals(array('[ ERROR ]  Uh-oh!', '[ ERROR ]  Unknown action: fake'), $clines);
+        $this->assertEquals(array(chr(27) . '[1;31m[ ERROR ]' . chr(27) . '[0m Uh-oh!', chr(27) . '[1;31m[ ERROR ]' . chr(27) . '[0m Unknown action: fake'), $clines);
     }
 
     function test_search_empty()
