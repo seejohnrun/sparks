@@ -74,7 +74,10 @@ class Spark_CLI {
         // Link up the new version
         @rename($zip_spark->temp_path . '/lib', $tool_dir . '/lib');
         @rename($zip_spark->temp_path . '/spark', $tool_dir . '/spark');
-        @`chmod u+x {$tool_dir}spark`;
+        @`chmod u+x {$tool_dir}/spark`;
+        // Tell the user the story of what just happened
+        Spark_utils::notice('Spark manager has been upgraded!');
+        $this->version();
     }
 
     // list the installed sparks
