@@ -37,7 +37,7 @@ class Spark_type {
     {
         foreach ($this->dependencies as $dependency)
         {
-            if (!$dependency->is_direct)
+            if ($dependency->is_direct)
             {
                 $this->install_dependency($dependency);
             }
