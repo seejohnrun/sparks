@@ -158,7 +158,7 @@ class Spark_CLI {
         $dir_to_remove = SPARK_PATH . ($version == null ? "/$spark_name" : "/$spark_name/$version");
         if (!file_exists($dir_to_remove))
         {
-            return Spark_utils::notice('Looks like that spark isn\'t installed');
+            return Spark_utils::warning('Looks like that spark isn\'t installed');
         }
 
         if ($version == null && !array_key_exists('f', $flags))
@@ -173,7 +173,7 @@ class Spark_CLI {
         }
         else 
         {
-            Spark_utils::notice('Looks like that spark isn\'t installed');
+            Spark_utils::warning('Looks like that spark isn\'t installed');
         }
         // attempt to clean up - will not remove unless empty 
         @rmdir(SPARK_PATH . "/$spark_name");
