@@ -67,7 +67,7 @@ class Spark_source {
         if ($this->outdated())
         {
             Spark_utils::warning("Your installed version of spark is outdated (current version: " . $this->outdated() . " / latest: " . $this->version . ")");
-            Spark_utils::warning("To upgrade now, use `tools/spark upgrade-system`");
+            Spark_utils::warning("To upgrade now, use `php tools/spark upgrade-system`");
         }
     }
 
