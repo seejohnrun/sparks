@@ -92,7 +92,7 @@ class Spark_CLI {
                 if (!is_dir(SPARK_PATH . "/$item/$ver") || $ver[0] == '.') continue;
                 Spark_utils::line("$item ($ver)");
             }
-        } 
+        }
     }
 
     private function version()
@@ -145,7 +145,7 @@ class Spark_CLI {
 
     private function remove($args)
     {
- 
+
         list($flats, $flags) = $this->prep_args($args);
 
         if (count($flats) != 1)
@@ -172,11 +172,11 @@ class Spark_CLI {
         {
             Spark_utils::notice('Spark removed successfully!');
         }
-        else 
+        else
         {
             Spark_utils::warning('Looks like that spark isn\'t installed');
         }
-        // attempt to clean up - will not remove unless empty 
+        // attempt to clean up - will not remove unless empty
         @rmdir(SPARK_PATH . "/$spark_name");
     }
 
@@ -221,7 +221,7 @@ class Spark_CLI {
 
     private function reinstall($args)
     {
- 
+
         list($flats, $flags) = $this->prep_args($args);
 
         if (count($flats) != 1)
@@ -236,17 +236,17 @@ class Spark_CLI {
         {
             throw new Spark_exception("Please specify a version to reinstall, or use -f to remove all versions and install latest.");
         }
-        
+
         $this->remove($args);
         $this->install($args);
     }
 
     /**
      * Prepares the command line arguments for use.
-     * 
+     *
      * Usage:
      * list($flats, $flags) = $this->prep_args($args);
-     * 
+     *
      * @param   array   the arguments array
      * @return  array   the flats and flags
      */
@@ -262,7 +262,7 @@ class Spark_CLI {
             if (count($matches) != 3) continue;
             $matches[0][0] == '-' ? $flags[$matches[1][1]] = $matches[2] : $flats[] = $matches[0];
         }
-        
+
         return array($flats, $flags);
     }
 
