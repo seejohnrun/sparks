@@ -57,7 +57,7 @@ class Spark_CLI {
         // Get version data
         $source = $this->spark_sources[0];
         if (!$source) throw new Spark_exception('No sources listed - unsure how to upgrade');
-        if ($source->outdated()) // We have an acceptable version
+        if (!$source->outdated()) // We have an acceptable version
         {
            Spark_utils::warning('Spark manager is already up to date');
            return;
