@@ -1,6 +1,10 @@
 #!/usr/bin/env php
 <?php
 
+// main working directory
+define ( 'SPARK_DIR', dirname (__FILE__) );
+@chdir(SPARK_DIR);
+
 require_once 'lib/spark/spark_source.php';
 require_once 'lib/spark/spark_cli.php';
 
